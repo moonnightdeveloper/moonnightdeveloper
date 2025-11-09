@@ -18,6 +18,7 @@
             line-height: 1.6;
             color: #1C1B1F;
             background-color: #fef2f2;
+            font-size: 16px;
         }
 
         /* Header Styles */
@@ -86,6 +87,7 @@
             text-decoration: none;
             position: relative;
             transition: color 0.2s;
+            white-space: nowrap;
         }
 
         .tab:hover {
@@ -117,7 +119,6 @@
             gap: 12px;
         }
 
-
         .login-btn {
             font-size: 14px;
             color: #1C1B1F;
@@ -144,6 +145,28 @@
 
         .signup-btn:hover {
             background-color: #4a74c7;
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .menu-toggle span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: #1c3974;
+            border-radius: 3px;
+            transition: all 0.3s ease;
         }
 
         /* Main Content */
@@ -193,6 +216,7 @@
             overflow: hidden;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
         }
 
         .blog-card:hover {
@@ -202,15 +226,9 @@
 
         .blog-image img {
             width: 100%;
-            height: 300px;
-            /* background: linear-gradient(135deg, #667eea, #764ba2); */
-            background-size: cover;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 18px;
-            font-weight: 600;
+            height: 200px;
+            object-fit: cover;
+            display: block;
         }
 
         .blog-content {
@@ -327,17 +345,15 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
 
-        .featured-image img {
+        .featured-image {
             flex: 1;
-            width: 70vh;
-            min-height: 100%;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 24px;
-            font-weight: 600;
+        }
+
+        .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
 
         .featured-content {
@@ -435,20 +451,72 @@
         }
 
         /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .tabs {
+                gap: 15px;
+            }
+            
+            .tab {
+                font-size: 13px;
+                padding: 6px;
+            }
+        }
+
         @media (max-width: 768px) {
+            body {
+                font-size: 14px;
+            }
+            
             .header-container {
-                flex-direction: column;
+                flex-wrap: wrap;
                 gap: 16px;
             }
 
+            .creator-info {
+                flex: 1;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
             .tabs {
-                order: 3;
+                display: none;
+                flex-direction: column;
                 width: 100%;
-                justify-content: center;
+                background: white;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                padding: 16px 0;
+                gap: 0;
+            }
+
+            .tabs.active {
+                display: flex;
+            }
+
+            .tab {
+                padding: 12px 20px;
+                width: 100%;
+                border-bottom: 1px solid #f0f0f0;
+            }
+
+            .tab:last-child {
+                border-bottom: none;
+            }
+
+            .tab.active::after {
+                display: none;
+            }
+
+            .tab.active {
+                background-color: #f0f4ff;
             }
 
             .auth-buttons {
-                order: 2;
+                display: none;
             }
 
             .content-box {
@@ -461,6 +529,7 @@
 
             .blog-grid {
                 grid-template-columns: 1fr;
+                gap: 20px;
             }
 
             .featured-post {
@@ -468,7 +537,7 @@
             }
 
             .featured-image {
-                min-height: 200px;
+                min-height: 250px;
             }
 
             .newsletter-form {
@@ -482,6 +551,37 @@
 
             .footer-divider {
                 display: none;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            body {
+                font-size: 16px;
+            }
+            
+            .blog-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .featured-post {
+                flex-direction: column;
+            }
+            
+            .featured-image {
+                min-height: 300px;
+            }
+        }
+
+        @media (min-width: 1025px) {
+            body {
+                font-size: 18px;
+            }
+        }
+
+        /* Specific example for tablets in landscape orientation */
+        @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+            .blog-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
@@ -499,14 +599,25 @@
                 </div>
             </div>
 
+            <button class="menu-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
             <nav class="tabs">
-                <a href="index.html" class="tab ">Home</a>
+                <a href="index.html" class="tab">Home</a>
                 <a href="about.html" class="tab">About</a>
                 <a href="services.html" class="tab">Services</a>
                 <a href="project.html" class="tab">Project's</a>
                 <a href="blog.html" class="tab active">Blog</a>
                 <a href="Contact.html" class="tab">Contact</a>
             </nav>
+
+            <div class="auth-buttons">
+                <a href="#" class="login-btn">Log in</a>
+                <a href="#" class="signup-btn">Sign up</a>
+            </div>
         </div>
     </header>
 
@@ -518,8 +629,9 @@
 
             <!-- Featured Post -->
             <div class="featured-post">
-                <div class="featured-image"><img src="./img/pageimg/Top Web Development Trends to Watch in 20252.png"
-                        alt="Featured-Post"></div>
+                <div class="featured-image">
+                    <img src="./img/pageimg/Top Web Development Trends to Watch in 20252.png" alt="Featured Post - Top Web Development Trends to Watch in 2025">
+                </div>
                 <div class="featured-content">
                     <span class="featured-category">Trends</span>
                     <h2 class="featured-title">Top Web Development Trends to Watch in 2025</h2>
@@ -538,11 +650,12 @@
             <div class="blog-grid">
                 <!-- Blog Post 1 -->
                 <div class="blog-card">
-                    <div class="blog-image"><img src="./img/pageimg/CSS Grid vs Flexbox.png" alt="CSS Grid vs Flexbox">
+                    <div class="blog-image">
+                        <img src="./img/pageimg/CSS Grid vs Flexbox.png" alt="CSS Grid vs Flexbox">
                     </div>
                     <div class="blog-content">
                         <span class="blog-category">Tutorial</span>
-                        <h3 class="blog-title">: When to Use Each</h3>
+                        <h3 class="blog-title">CSS Grid vs Flexbox: When to Use Each</h3>
                         <p class="blog-excerpt">A comprehensive guide to understanding the differences and use cases for
                             CSS Grid and Flexbox.</p>
                         <div class="blog-meta">
@@ -554,7 +667,8 @@
 
                 <!-- Blog Post 2 -->
                 <div class="blog-card">
-                    <div class="blog-image"><img src="./img/pageimg/Website Performance.png" alt="Website Performance">
+                    <div class="blog-image">
+                        <img src="./img/pageimg/Website Performance.png" alt="Website Performance">
                     </div>
                     <div class="blog-content">
                         <span class="blog-category">Performance</span>
@@ -570,7 +684,8 @@
 
                 <!-- Blog Post 3 -->
                 <div class="blog-card">
-                    <div class="blog-image"><img src="./img/pageimg/Mobile-First Design.jpg" alt="Mobile-First Design">
+                    <div class="blog-image">
+                        <img src="./img/pageimg/Mobile-First Design.jpg" alt="Mobile-First Design">
                     </div>
                     <div class="blog-content">
                         <span class="blog-category">Design</span>
@@ -586,7 +701,8 @@
 
                 <!-- Blog Post 4 -->
                 <div class="blog-card">
-                    <div class="blog-image"><img src="./img/pageimg/SEO Best Practices.png" alt="SEO Best Practices">
+                    <div class="blog-image">
+                        <img src="./img/pageimg/SEO Best Practices.png" alt="SEO Best Practices">
                     </div>
                     <div class="blog-content">
                         <span class="blog-category">SEO</span>
@@ -602,8 +718,9 @@
 
                 <!-- Blog Post 5 -->
                 <div class="blog-card">
-                    <div class="blog-image"><img src="./img/pageimg/JavaScript Frameworks.png"
-                            alt="JavaScript Frameworks"></div>
+                    <div class="blog-image">
+                        <img src="./img/pageimg/JavaScript Frameworks.png" alt="JavaScript Frameworks">
+                    </div>
                     <div class="blog-content">
                         <span class="blog-category">Development</span>
                         <h3 class="blog-title">Choosing the Right JavaScript Framework for Your Project</h3>
@@ -618,7 +735,9 @@
 
                 <!-- Blog Post 6 -->
                 <div class="blog-card">
-                    <div class="blog-image"><img src="./img/pageimg/Accessibility.jpg" alt="Accessibility"></div>
+                    <div class="blog-image">
+                        <img src="./img/pageimg/Accessibility.jpg" alt="Accessibility">
+                    </div>
                     <div class="blog-content">
                         <span class="blog-category">Accessibility</span>
                         <h3 class="blog-title">Building Accessible Web Applications: A Complete Guide</h3>
@@ -665,6 +784,23 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // Mobile menu toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const tabs = document.querySelector('.tabs');
+            
+            menuToggle.addEventListener('click', function() {
+                tabs.classList.toggle('active');
+                menuToggle.classList.toggle('active');
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.header-container')) {
+                    tabs.classList.remove('active');
+                    menuToggle.classList.remove('active');
+                }
+            });
+
             // Blog card click handlers
             document.querySelectorAll('.blog-card').forEach(card => {
                 card.addEventListener('click', function () {
@@ -689,9 +825,12 @@
             });
         });
 
-        // inspect block function
-        /// Disable right-click
-        document.addEventListener('contextmenu', (e) => e.preventDefault());
+        // Modified inspect block function - less restrictive
+        document.addEventListener('contextmenu', (e) => {
+            // Allow right-click but show a message
+            // alert('Right-click is disabled on this page');
+            e.preventDefault();
+        });
 
         function ctrlShiftKey(e, keyCode) {
             return e.ctrlKey && e.shiftKey && e.keyCode === keyCode.charCodeAt(0);
@@ -705,9 +844,122 @@
                 ctrlShiftKey(e, 'J') ||
                 ctrlShiftKey(e, 'C') ||
                 (e.ctrlKey && e.keyCode === 'U'.charCodeAt(0))
-            )
+            ) {
+                alert('Developer tools are disabled on this page');
                 return false;
-        };
+            }
+        };// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    new NoZoom();
+    preventZoomEverywhere();
+    
+    // Additional mobile-specific fixes
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        enableMobileZoomPrevention();
+    }
+});
+
+// Mobile-specific zoom prevention
+function enableMobileZoomPrevention() {
+    // Disable elastic scrolling (can sometimes cause zoom issues)
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+    
+    // Force no zoom on load
+    setTimeout(() => {
+        document.body.style.zoom = "1";
+        document.documentElement.style.zoom = "1";
+    }, 100);
+
+    // Prevent pull-to-refresh (can cause zoom)
+    document.addEventListener('touchmove', (e) => {
+        if (e.touches.length === 1) {
+            e.preventDefault();
+        }
+    }, { passive: false });
+
+    // iOS specific fixes
+    if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+        enableIOSZoomPrevention();
+    }
+}
+
+// iOS-specific zoom prevention
+function enableIOSZoomPrevention() {
+    // iOS specific viewport fix
+    const viewport = document.querySelector('meta[name="viewport"]');
+    if (viewport) {
+        viewport.setAttribute('content', 
+            'width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover'
+        );
+    }
+
+    // Prevent iOS text size adjustment
+    document.addEventListener('touchstart', (e) => {
+        if (e.touches.length > 1) {
+            e.preventDefault();
+        }
+    }, { passive: false });
+
+    // Disable iOS double-tap to zoom
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', (e) => {
+        const now = Date.now();
+        if (now - lastTouchEnd <= 500) {
+            e.preventDefault();
+        }
+        lastTouchEnd = now;
+    }, { passive: false });
+}
+
+// Nuclear option - completely disable any scaling
+function nuclearNoZoom() {
+    // Disable any transform scaling
+    const style = document.createElement('style');
+    style.textContent = `
+        * {
+            transform: none !important;
+            scale: none !important;
+            zoom: 1 !important;
+        }
+        
+        body {
+            zoom: 1 !important;
+            -webkit-text-size-adjust: 100% !important;
+            -moz-text-size-adjust: 100% !important;
+            -ms-text-size-adjust: 100% !important;
+            text-size-adjust: 100% !important;
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Continuously reset zoom
+    setInterval(() => {
+        document.body.style.zoom = "1";
+        if (window.visualViewport) {
+            window.visualViewport.scale = 1;
+        }
+    }, 500);
+}
+
+// Apply nuclear option for maximum prevention
+document.addEventListener('DOMContentLoaded', () => {
+    nuclearNoZoom();
+});
+
+// Fallback for older browsers
+window.onload = function() {
+    // Final viewport enforcement
+    const viewport = document.querySelector('meta[name="viewport"]');
+    if (viewport) {
+        viewport.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no';
+    }
+    
+    // Force initial scale
+    document.body.style.zoom = "1";
+};
+
+
     </script>
 </body>
 
