@@ -18,7 +18,6 @@
             line-height: 1.6;
             color: #1C1B1F;
             background-color: #fef2f2;
-
         }
 
         /* Header Styles */
@@ -27,8 +26,14 @@
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
             position: sticky;
             top: 0;
-            z-index: 20;
+            z-index: 100;
             padding: 12px 0;
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled {
+            padding: 8px 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
 
         .header-container {
@@ -57,6 +62,11 @@
             font-weight: 800;
             color: white;
             font-size: 18px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: rotate(5deg) scale(1.05);
         }
 
         .creator-name {
@@ -67,6 +77,11 @@
         .creator-name a {
             color: inherit;
             text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .creator-name a:hover {
+            color: #1c3974;
         }
 
         .supporter-count {
@@ -146,6 +161,39 @@
             background-color: #4a74c7;
         }
 
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .mobile-menu-btn span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: #1C1B1F;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+
         /* Main Content */
         .main-content {
             max-width: 1500px;
@@ -159,6 +207,24 @@
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
             padding: 40px;
             margin-bottom: 32px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .content-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, #1c3974, #4a74c7);
+        }
+
+        .content-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
         }
 
         .page-title {
@@ -167,6 +233,19 @@
             text-align: center;
             margin-bottom: 16px;
             color: #1c3974;
+            position: relative;
+        }
+
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, #1c3974, #4a74c7);
+            border-radius: 2px;
         }
 
         .page-subtitle {
@@ -206,6 +285,7 @@
             display: flex;
             flex-direction: column;
             height: 100%;
+            position: relative;
         }
 
         .service-card:hover {
@@ -213,16 +293,22 @@
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
         }
 
+        .service-icon {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
         .service-icon img {
             width: 100%;
-            height: 280px;
-            /* background: linear-gradient(135deg, #1c3974, #4a74c7); */
-            background-size: cover;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 48px;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .service-card:hover .service-icon img {
+            transform: scale(1.05);
         }
 
         .service-info {
@@ -256,6 +342,11 @@
             color: #555;
             position: relative;
             padding-left: 24px;
+            transition: color 0.3s ease;
+        }
+
+        .service-features li:hover {
+            color: #1c3974;
         }
 
         .service-features li:before {
@@ -287,11 +378,18 @@
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.2s;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
         .service-button:hover {
-            background: #4a74c7;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(59, 86, 243, 0.4);
+        }
+
+        .service-button:active {
+            transform: translateY(0);
         }
 
         /* Process Section */
@@ -312,9 +410,23 @@
             background: #f8f9fa;
             border-radius: 12px;
             box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .process-step::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, #1c3974, #4a74c7);
         }
 
         .process-step:hover {
+            transform: translateY(-5px);
             box-shadow: rgba(0, 0, 0, 0.418) 0px 15px 25px, rgba(0, 0, 0, 0.295) 0px 5px 10px;
         }
 
@@ -330,6 +442,11 @@
             font-size: 24px;
             font-weight: 700;
             margin: 0 auto 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .process-step:hover .step-number {
+            transform: scale(1.1);
         }
 
         .step-title {
@@ -351,7 +468,6 @@
             border-radius: 20px;
             padding: 60px 40px;
             text-align: center;
-            /* max-width: 600px; */
             width: 100%;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -572,32 +688,6 @@
             }
         }
 
-        /* Responsive design */
-        @media (max-width: 768px) {
-            .cta-title {
-                font-size: 2rem;
-            }
-
-            .cta-description {
-                font-size: 1rem;
-            }
-
-            .cta-button {
-                padding: 12px 30px;
-                font-size: 1rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .cta-section {
-                padding: 40px 20px;
-            }
-
-            .cta-title {
-                font-size: 1.8rem;
-            }
-        }
-
         /* Testimonials Section */
         .testimonials-section {
             margin-top: 60px;
@@ -616,6 +706,11 @@
             padding: 30px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             border-left: 4px solid #1c3974;
+            transition: transform 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
         }
 
         .testimonial-text {
@@ -623,6 +718,18 @@
             color: #555;
             line-height: 1.6;
             margin-bottom: 20px;
+            position: relative;
+        }
+
+        .testimonial-text::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            font-size: 60px;
+            color: rgba(28, 57, 116, 0.1);
+            font-family: Georgia, serif;
+            line-height: 1;
         }
 
         .testimonial-author {
@@ -635,12 +742,13 @@
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background: #e5e5e5;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 600;
-            color: #1c3974;
+            color: white;
+            font-size: 18px;
         }
 
         .author-info h4 {
@@ -669,6 +777,11 @@
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
         }
 
         .faq-question {
@@ -680,6 +793,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: #e9ecef;
         }
 
         .faq-answer {
@@ -709,6 +827,7 @@
             background-color: white;
             padding: 40px 0;
             margin-top: 40px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         .footer-container {
@@ -748,21 +867,68 @@
             text-align: center;
         }
 
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: #1c3974;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 99;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: #4a74c7;
+            transform: translateY(-3px);
+        }
+
         /* Responsive Styles */
         @media (max-width: 768px) {
             .header-container {
-                flex-direction: column;
+                flex-direction: row;
                 gap: 16px;
             }
 
             .tabs {
-                order: 3;
+                position: fixed;
+                top: 80px;
+                left: 0;
                 width: 100%;
-                justify-content: center;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+                z-index: 99;
             }
 
-            .auth-buttons {
-                order: 2;
+            .tabs.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
             }
 
             .content-box {
@@ -799,6 +965,29 @@
             .footer-divider {
                 display: none;
             }
+
+            .cta-title {
+                font-size: 2rem;
+            }
+
+            .cta-description {
+                font-size: 1rem;
+            }
+
+            .cta-button {
+                padding: 12px 30px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cta-section {
+                padding: 40px 20px;
+            }
+
+            .cta-title {
+                font-size: 1.8rem;
+            }
         }
     </style>
 </head>
@@ -815,13 +1004,19 @@
                 </div>
             </div>
 
+            <button class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
             <nav class="tabs">
-                <a href="index.html" class="tab"  >Home</a>
-                <a href="about.html" class="tab"  >About</a>
-                <a href="services.html" class="tab active"  >Services</a>
-                <a href="project.html" class="tab"  >Project's</a>
-                <a href="blog.html" class="tab"  >Blog</a>
-                <a href="Contact.html" class="tab"  >Contact</a>
+                <a href="index.html" class="tab">Home</a>
+                <a href="about.html" class="tab">About</a>
+                <a href="services.html" class="tab active">Services</a>
+                <a href="project.html" class="tab">Project's</a>
+                <a href="blog.html" class="tab">Blog</a>
+                <a href="Contact.html" class="tab">Contact</a>
             </nav>
         </div>
     </header>
@@ -844,8 +1039,9 @@
             <div class="services-grid">
                 <!-- Service 1 -->
                 <div class="service-card">
-                    <div class="service-icon"><img src="./img/pageimg/Custom Website Development.webp"
-                            alt="Custom Website Development"></div>
+                    <div class="service-icon">
+                        <img src="./img/pageimg/Custom Website Development.webp" alt="Custom Website Development">
+                    </div>
                     <div class="service-info">
                         <h3 class="service-name">Custom Website Development</h3>
                         <p class="service-description">Fully customized websites built from scratch to match your brand
@@ -866,8 +1062,9 @@
 
                 <!-- Service 2 -->
                 <div class="service-card">
-                    <div class="service-icon"><img src="./img/pageimg/E-commerce Solutions.webp"
-                            alt="E-commerce Solutions"></div>
+                    <div class="service-icon">
+                        <img src="./img/pageimg/E-commerce Solutions.webp" alt="E-commerce Solutions">
+                    </div>
                     <div class="service-info">
                         <h3 class="service-name">E-commerce Solutions</h3>
                         <p class="service-description">Complete online store setup with payment integration, inventory
@@ -888,8 +1085,9 @@
 
                 <!-- Service 3 -->
                 <div class="service-card">
-                    <div class="service-icon"><img src="./img/pageimg/Web Application Development.png"
-                            alt="Web Application Development"></div>
+                    <div class="service-icon">
+                        <img src="./img/pageimg/Web Application Development.png" alt="Web Application Development">
+                    </div>
                     <div class="service-info">
                         <h3 class="service-name">Web Application Development</h3>
                         <p class="service-description">Dynamic web applications with advanced functionality, user
@@ -910,7 +1108,9 @@
 
                 <!-- Service 4 -->
                 <div class="service-card">
-                    <div class="service-icon"><img src="./img/pageimg/UIUX Design2.avif" alt=""></div>
+                    <div class="service-icon">
+                        <img src="./img/pageimg/UIUX Design2.avif" alt="UI/UX Design">
+                    </div>
                     <div class="service-info">
                         <h3 class="service-name">UI/UX Design</h3>
                         <p class="service-description">User-centered design that creates intuitive, engaging experiences
@@ -931,8 +1131,9 @@
 
                 <!-- Service 5 -->
                 <div class="service-card">
-                    <div class="service-icon"><img src="./img/pageimg/Website Maintenance.webp"
-                            alt="Website Maintenance"></div>
+                    <div class="service-icon">
+                        <img src="./img/pageimg/Website Maintenance.webp" alt="Website Maintenance">
+                    </div>
                     <div class="service-info">
                         <h3 class="service-name">Website Maintenance</h3>
                         <p class="service-description">Ongoing support and maintenance to keep your website secure,
@@ -953,7 +1154,9 @@
 
                 <!-- Service 6 -->
                 <div class="service-card">
-                    <div class="service-icon"><img src="./img/Tours & Travel Website.jpg" alt="Website Templates"></div>
+                    <div class="service-icon">
+                        <img src="./img/Tours & Travel Website.jpg" alt="Website Templates">
+                    </div>
                     <div class="service-info">
                         <h3 class="service-name">Website Templates</h3>
                         <p class="service-description">Premium, customizable website templates for various industries
@@ -1157,8 +1360,43 @@
         </div>
     </footer>
 
+    <!-- Back to top button -->
+    <div class="back-to-top">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7 14L12 9L17 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+        </svg>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // Header scroll effect
+            const header = document.querySelector('.header');
+            window.addEventListener('scroll', function () {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+
+            // Mobile menu functionality
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const tabs = document.querySelector('.tabs');
+            
+            mobileMenuBtn.addEventListener('click', function () {
+                this.classList.toggle('active');
+                tabs.classList.toggle('active');
+            });
+
+            // Close mobile menu when clicking on a link
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', function () {
+                    mobileMenuBtn.classList.remove('active');
+                    tabs.classList.remove('active');
+                });
+            });
+
             // Service button click handlers
             document.querySelectorAll('.service-button').forEach(button => {
                 button.addEventListener('click', function () {
@@ -1184,6 +1422,24 @@
                     alert('This would navigate to the contact page in a real implementation.');
                 }
             });
+
+            // Back to top button functionality
+            const backToTopBtn = document.querySelector('.back-to-top');
+            
+            window.addEventListener('scroll', function () {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('visible');
+                } else {
+                    backToTopBtn.classList.remove('visible');
+                }
+            });
+
+            backToTopBtn.addEventListener('click', function () {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
         });
         // inspect block function
         /// Disable right-click
@@ -1204,6 +1460,118 @@
             )
                 return false;
         };
+        // Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    new NoZoom();
+    preventZoomEverywhere();
+    
+    // Additional mobile-specific fixes
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        enableMobileZoomPrevention();
+    }
+});
+
+// Mobile-specific zoom prevention
+function enableMobileZoomPrevention() {
+    // Disable elastic scrolling (can sometimes cause zoom issues)
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+    
+    // Force no zoom on load
+    setTimeout(() => {
+        document.body.style.zoom = "1";
+        document.documentElement.style.zoom = "1";
+    }, 100);
+
+    // Prevent pull-to-refresh (can cause zoom)
+    document.addEventListener('touchmove', (e) => {
+        if (e.touches.length === 1) {
+            e.preventDefault();
+        }
+    }, { passive: false });
+
+    // iOS specific fixes
+    if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+        enableIOSZoomPrevention();
+    }
+}
+
+// iOS-specific zoom prevention
+function enableIOSZoomPrevention() {
+    // iOS specific viewport fix
+    const viewport = document.querySelector('meta[name="viewport"]');
+    if (viewport) {
+        viewport.setAttribute('content', 
+            'width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover'
+        );
+    }
+
+    // Prevent iOS text size adjustment
+    document.addEventListener('touchstart', (e) => {
+        if (e.touches.length > 1) {
+            e.preventDefault();
+        }
+    }, { passive: false });
+
+    // Disable iOS double-tap to zoom
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', (e) => {
+        const now = Date.now();
+        if (now - lastTouchEnd <= 500) {
+            e.preventDefault();
+        }
+        lastTouchEnd = now;
+    }, { passive: false });
+}
+
+// Nuclear option - completely disable any scaling
+function nuclearNoZoom() {
+    // Disable any transform scaling
+    const style = document.createElement('style');
+    style.textContent = `
+        * {
+            transform: none !important;
+            scale: none !important;
+            zoom: 1 !important;
+        }
+        
+        body {
+            zoom: 1 !important;
+            -webkit-text-size-adjust: 100% !important;
+            -moz-text-size-adjust: 100% !important;
+            -ms-text-size-adjust: 100% !important;
+            text-size-adjust: 100% !important;
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Continuously reset zoom
+    setInterval(() => {
+        document.body.style.zoom = "1";
+        if (window.visualViewport) {
+            window.visualViewport.scale = 1;
+        }
+    }, 500);
+}
+
+// Apply nuclear option for maximum prevention
+document.addEventListener('DOMContentLoaded', () => {
+    nuclearNoZoom();
+});
+
+// Fallback for older browsers
+window.onload = function() {
+    // Final viewport enforcement
+    const viewport = document.querySelector('meta[name="viewport"]');
+    if (viewport) {
+        viewport.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no';
+    }
+    
+    // Force initial scale
+    document.body.style.zoom = "1";
+};
+
+
     </script>
 </body>
 
