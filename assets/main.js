@@ -580,164 +580,147 @@ function setupPageLayout(currentPage = null) {
 // ****************************************************************************************************************************************
 
 
-// // Modified inspect block function - less restrictive
-// document.addEventListener('contextmenu', (e) => {
-//     // Allow right-click but show a message
-//     // alert('Right-click is disabled on this page');
-//     e.preventDefault();
-// });
+// Modified inspect block function - less restrictive
+document.addEventListener('contextmenu', (e) => {
+    // Allow right-click but show a message
+    // alert('Right-click is disabled on this page');
+    e.preventDefault();
+});
 
-// function ctrlShiftKey(e, keyCode) {
-//     return e.ctrlKey && e.shiftKey && e.keyCode === keyCode.charCodeAt(0);
-// }
+function ctrlShiftKey(e, keyCode) {
+    return e.ctrlKey && e.shiftKey && e.keyCode === keyCode.charCodeAt(0);
+}
 
-// document.onkeydown = (e) => {
-//     // Disable F12, Ctrl + Shift + I, Ctrl + Shift + J, Ctrl + U
-//     if (
-//         event.keyCode === 123 ||
-//         ctrlShiftKey(e, 'I') ||
-//         ctrlShiftKey(e, 'J') ||
-//         ctrlShiftKey(e, 'C') ||
-//         (e.ctrlKey && e.keyCode === 'U'.charCodeAt(0))
-//     ) {
-//         alert('Developer tools are disabled on this page');
-//         return false;
-//     }
-// };
-// // Initialize when DOM is loaded
-// document.addEventListener('DOMContentLoaded', () => {
-//     new NoZoom();
-//     preventZoomEverywhere();
+document.onkeydown = (e) => {
+    // Disable F12, Ctrl + Shift + I, Ctrl + Shift + J, Ctrl + U
+    if (
+        event.keyCode === 123 ||
+        ctrlShiftKey(e, 'I') ||
+        ctrlShiftKey(e, 'J') ||
+        ctrlShiftKey(e, 'C') ||
+        (e.ctrlKey && e.keyCode === 'U'.charCodeAt(0))
+    ) {
+        alert('Developer tools are disabled on this page');
+        return false;
+    }
+};
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    new NoZoom();
+    preventZoomEverywhere();
 
-//     // Additional mobile-specific fixes
-//     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-//         enableMobileZoomPrevention();
-//     }
-// });
+    // Additional mobile-specific fixes
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        enableMobileZoomPrevention();
+    }
+});
 
 // *************************************************************************************************************************************
 
 
-//     // Mobile-specific zoom prevention
-//     function enableMobileZoomPrevention() {
-//         // Disable elastic scrolling (can sometimes cause zoom issues)
-//         document.body.style.overflow = 'hidden';
-//         document.documentElement.style.overflow = 'hidden';
+    // Mobile-specific zoom prevention
+    function enableMobileZoomPrevention() {
+        // Disable elastic scrolling (can sometimes cause zoom issues)
+        document.body.style.overflow = 'hidden';
+        document.documentElement.style.overflow = 'hidden';
 
-//         // Force no zoom on load
-//         setTimeout(() => {
-//             document.body.style.zoom = "1";
-//             document.documentElement.style.zoom = "1";
-//         }, 100);
+        // Force no zoom on load
+        setTimeout(() => {
+            document.body.style.zoom = "1";
+            document.documentElement.style.zoom = "1";
+        }, 100);
 
-//         // Prevent pull-to-refresh (can cause zoom)
-//         document.addEventListener('touchmove', (e) => {
-//             if (e.touches.length === 1) {
-//                 e.preventDefault();
-//             }
-//         }, { passive: false });
+        // Prevent pull-to-refresh (can cause zoom)
+        document.addEventListener('touchmove', (e) => {
+            if (e.touches.length === 1) {
+                e.preventDefault();
+            }
+        }, { passive: false });
 
-//         // iOS specific fixes
-//         if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
-//             enableIOSZoomPrevention();
-//         }
-//     }
+        // iOS specific fixes
+        if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+            enableIOSZoomPrevention();
+        }
+    }
 
-//     // iOS-specific zoom prevention
-//     function enableIOSZoomPrevention() {
-//         // iOS specific viewport fix
-//         const viewport = document.querySelector('meta[name="viewport"]');
-//         if (viewport) {
-//             viewport.setAttribute('content',
-//                 'width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover'
-//             );
-//         }
+    // iOS-specific zoom prevention
+    function enableIOSZoomPrevention() {
+        // iOS specific viewport fix
+        const viewport = document.querySelector('meta[name="viewport"]');
+        if (viewport) {
+            viewport.setAttribute('content',
+                'width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover'
+            );
+        }
 
-//         // Prevent iOS text size adjustment
-//         document.addEventListener('touchstart', (e) => {
-//             if (e.touches.length > 1) {
-//                 e.preventDefault();
-//             }
-//         }, { passive: false });
+        // Prevent iOS text size adjustment
+        document.addEventListener('touchstart', (e) => {
+            if (e.touches.length > 1) {
+                e.preventDefault();
+            }
+        }, { passive: false });
 
-//         // Disable iOS double-tap to zoom
-//         let lastTouchEnd = 0;
-//         document.addEventListener('touchend', (e) => {
-//             const now = Date.now();
-//             if (now - lastTouchEnd <= 500) {
-//                 e.preventDefault();
-//             }
-//             lastTouchEnd = now;
-//         }, { passive: false });
-//     }
+        // Disable iOS double-tap to zoom
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', (e) => {
+            const now = Date.now();
+            if (now - lastTouchEnd <= 500) {
+                e.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, { passive: false });
+    }
 
-//     // Nuclear option - completely disable any scaling
-//     function nuclearNoZoom() {
-//         // Disable any transform scaling
-//         const style = document.createElement('style');
-//         style.textContent = `
-//     * {
-//         transform: none !important;
-//         scale: none !important;
-//         zoom: 1 !important;
-//     }
+    // Nuclear option - completely disable any scaling
+    function nuclearNoZoom() {
+        // Disable any transform scaling
+        const style = document.createElement('style');
+        style.textContent = `
+    * {
+        transform: none !important;
+        scale: none !important;
+        zoom: 1 !important;
+    }
 
-//     body {
-//         zoom: 1 !important;
-//         -webkit-text-size-adjust: 100% !important;
-//         -moz-text-size-adjust: 100% !important;
-//         -ms-text-size-adjust: 100% !important;
-//         text-size-adjust: 100% !important;
-//     }
-// `;
-//         document.head.appendChild(style);
+    body {
+        zoom: 1 !important;
+        -webkit-text-size-adjust: 100% !important;
+        -moz-text-size-adjust: 100% !important;
+        -ms-text-size-adjust: 100% !important;
+        text-size-adjust: 100% !important;
+    }
+`;
+        document.head.appendChild(style);
 
-//         // Continuously reset zoom
-//         setInterval(() => {
-//             document.body.style.zoom = "1";
-//             if (window.visualViewport) {
-//                 window.visualViewport.scale = 1;
-//             }
-//         }, 500);
-//     }
+        // Continuously reset zoom
+        setInterval(() => {
+            document.body.style.zoom = "1";
+            if (window.visualViewport) {
+                window.visualViewport.scale = 1;
+            }
+        }, 500);
+    }
 
-//     // Apply nuclear option for maximum prevention
-//     document.addEventListener('DOMContentLoaded', () => {
-//         nuclearNoZoom();
-//     });
+    // Apply nuclear option for maximum prevention
+    document.addEventListener('DOMContentLoaded', () => {
+        nuclearNoZoom();
+    });
 
-//     // Fallback for older browsers
-//     window.onload = function () {
-//         // Final viewport enforcement
-//         const viewport = document.querySelector('meta[name="viewport"]');
-//         if (viewport) {
-//             viewport.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no';
-//         }
+    // Fallback for older browsers
+    window.onload = function () {
+        // Final viewport enforcement
+        const viewport = document.querySelector('meta[name="viewport"]');
+        if (viewport) {
+            viewport.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no';
+        }
 
-//         // Force initial scale
-//         document.body.style.zoom = "1";
-//     };
+        // Force initial scale
+        document.body.style.zoom = "1";
+    };
 
 // **********************************************************************************************************************************************************
 
 
-// // Back to top button
-// const backToTopBtn = document.querySelector('.back-to-top');
-
-// window.addEventListener('scroll', function () {
-//     if (window.scrollY > 300) {
-//         backToTopBtn.classList.add('visible');
-//     } else {
-//         backToTopBtn.classList.remove('visible');
-//     }
-// });
-
-// backToTopBtn.addEventListener('click', function () {
-//     window.scrollTo({
-//         top: 0,
-//         behavior: 'smooth'
-//     });
-// });
 
 
 // Usage
