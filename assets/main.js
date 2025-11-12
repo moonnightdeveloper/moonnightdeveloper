@@ -376,7 +376,6 @@ function getCurrentPage() {
     // Map file names to page keys
     const pageMap = {
         'index.html': 'home',
-        'home.html': 'home',
         'about.html': 'about',
         'services.html': 'services',
         'project.html': 'project',
@@ -533,7 +532,7 @@ function setupPageLayout(currentPage = null) {
                 <div class="footer-divider"></div>
                 <a href="privacy.html" class="footer-link">Privacy Policy</a>
                 <div class="footer-divider"></div>
-                <a href="terms.html" class="footer-link">Terms of Service</a>
+                <a href="term.html" class="footer-link">Terms of Service</a>
             </div>
             <div class="footer-cta">
                 <h5>© Copyright 2025 by MND. All rights reserved!</h5>
