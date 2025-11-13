@@ -13,11 +13,12 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     line-height: 1.6;
     color: #1C1B1F;
-    background-color: #ffffffff;
+    background-color: #ffffff;
     font-size: 16px;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
 }
 
 /* Main content area */
@@ -27,6 +28,7 @@ body {
     max-width: 1500px;
     margin: 0 auto;
     width: 100%;
+    overflow: visible;
 }
 
 /* Blog specific styles */
@@ -587,133 +589,16 @@ document.onkeydown = (e) => {
     }
 };
 
-// Improved zoom prevention - Less aggressive
-class NoZoom {
-    constructor() {
-        this.init();
+// Simple viewport setup without aggressive zoom prevention
+function setupViewport() {
+    let viewport = document.querySelector('meta[name="viewport"]');
+    if (!viewport) {
+        viewport = document.createElement('meta');
+        viewport.name = 'viewport';
+        document.head.appendChild(viewport);
     }
-
-    init() {
-        this.disableZoom();
-        this.preventZoomGestures();
-    }
-
-    disableZoom() {
-        // Set viewport to prevent zooming but allow some accessibility
-        const viewport = document.querySelector('meta[name="viewport"]');
-        if (viewport) {
-            viewport.setAttribute('content', 
-                'width=device-width, initial-scale=1.0, maximum-scale=1.5, minimum-scale=1.0, user-scalable=yes'
-            );
-        } else {
-            const meta = document.createElement('meta');
-            meta.name = 'viewport';
-            meta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.5, minimum-scale=1.0, user-scalable=yes';
-            document.head.appendChild(meta);
-        }
-    }
-
-    preventZoomGestures() {
-        // Only prevent double-tap zoom on non-text elements
-        let lastTouchEnd = 0;
-        document.addEventListener('touchend', function (event) {
-            const now = (new Date()).getTime();
-            if (now - lastTouchEnd <= 300 && 
-                !event.target.matches('input, textarea, [contenteditable="true"]')) {
-                event.preventDefault();
-            }
-            lastTouchEnd = now;
-        }, { passive: false });
-
-        // Only prevent pinch zoom on non-text elements
-        document.addEventListener('touchmove', function (event) {
-            if (event.scale !== 1 && 
-                !event.target.matches('input, textarea, [contenteditable="true"]')) {
-                event.preventDefault();
-            }
-        }, { passive: false });
-    }
-}
-
-// Improved zoom prevention
-function preventZoomEverywhere() {
-    // More reasonable viewport settings
-    const viewportMeta = document.querySelector('meta[name="viewport"]');
-    if (viewportMeta) {
-        viewportMeta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.5, minimum-scale=1.0, user-scalable=yes, shrink-to-fit=no';
-    }
-
-    // Less restrictive CSS
-    const antiZoomStyle = document.createElement('style');
-    antiZoomStyle.textContent = `
-        * {
-            -webkit-tap-highlight-color: transparent;
-        }
-        
-        input, textarea, [contenteditable="true"] {
-            -webkit-user-select: text;
-            -moz-user-select: text;
-            -ms-user-select: text;
-            user-select: text;
-        }
-    `;
-    document.head.appendChild(antiZoomStyle);
-}
-
-// Mobile-specific improvements
-function enableMobileZoomPrevention() {
-    // Remove overflow hidden as it can cause issues
-    document.body.style.overflow = 'auto';
-    document.documentElement.style.overflow = 'auto';
-
-    // Only prevent pull-to-refresh on specific elements
-    let startY = 0;
-    
-    document.addEventListener('touchstart', (e) => {
-        startY = e.touches[0].clientY;
-    }, { passive: true });
-    
-    document.addEventListener('touchmove', (e) => {
-        // Only prevent pull-to-refresh when at the top of the page
-        if (window.scrollY === 0 && e.touches[0].clientY > startY) {
-            e.preventDefault();
-        }
-    }, { passive: false });
-
-    // iOS specific fixes
-    if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
-        enableIOSZoomPrevention();
-    }
-}
-
-// iOS-specific zoom prevention - Less aggressive
-function enableIOSZoomPrevention() {
-    // iOS specific viewport fix - more permissive
-    const viewport = document.querySelector('meta[name="viewport"]');
-    if (viewport) {
-        viewport.setAttribute('content',
-            'width=device-width, initial-scale=1.0, maximum-scale=1.5, minimum-scale=1.0, user-scalable=yes, viewport-fit=cover'
-        );
-    }
-
-    // Less restrictive iOS text size adjustment prevention
-    document.addEventListener('touchstart', (e) => {
-        if (e.touches.length > 1 && 
-            !e.target.matches('input, textarea, [contenteditable="true"]')) {
-            e.preventDefault();
-        }
-    }, { passive: false });
-
-    // Disable iOS double-tap to zoom on non-text elements
-    let lastTouchEnd = 0;
-    document.addEventListener('touchend', (e) => {
-        const now = Date.now();
-        if (now - lastTouchEnd <= 500 && 
-            !e.target.matches('input, textarea, [contenteditable="true"]')) {
-            e.preventDefault();
-        }
-        lastTouchEnd = now;
-    }, { passive: false });
+    // Allow zooming for accessibility
+    viewport.content = 'width=device-width, initial-scale=1.0';
 }
 
 // Blog content setup (if needed)
@@ -732,20 +617,14 @@ function setupBlogContent() {
 
 // Main initialization
 document.addEventListener('DOMContentLoaded', function () {
+    // Setup viewport first
+    setupViewport();
+    
     // Setup page layout with navbar and footer
     setupPageLayout();
     
     // Setup blog content if needed
     setupBlogContent();
-
-    // Initialize security features with less aggressive settings
-    new NoZoom();
-    preventZoomEverywhere();
-
-    // Additional mobile-specific fixes
-    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        enableMobileZoomPrevention();
-    }
 
     // Debug: Log current page for verification
     console.log('MND Web Development - Page loaded successfully');
@@ -754,14 +633,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Fallback for older browsers
 window.onload = function () {
-    // Final viewport enforcement - more permissive
-    const viewport = document.querySelector('meta[name="viewport"]');
-    if (viewport) {
-        viewport.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.5, minimum-scale=1.0, user-scalable=yes';
-    }
-
-    // Remove forced zoom
-    document.body.style.zoom = "";
+    // Ensure viewport is set
+    setupViewport();
 };
 
 // Export functions for global access (if needed)
