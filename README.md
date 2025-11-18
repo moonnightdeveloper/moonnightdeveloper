@@ -3,9 +3,9 @@ Hi
 
 # MND Development - **[LIVE DEMO](https://moonnightdeveloper.github.io/moonnightdeveloper/)**.
 #
-![Alt text](https://i.im.ge/2025/11/19/4r3wiy.GH.jpeg)
+![Girls Hostel](https://i.im.ge/2025/11/19/4r3wiy.GH.jpeg | width=100)
 A modern, responsive contact page for MND Development with a fully mobile-responsive navbar and professional design.
-
+Girls Hostel
 ## 🚀 Features
 
 - **Fully Responsive Design** - Works perfectly on all devices (desktop, tablet, mobile)
